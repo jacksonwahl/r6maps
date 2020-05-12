@@ -282,7 +282,7 @@ var R6MLangTerms = (function(undefined) {
       },
       mapNames: {
         bank: 'Bank',
-        bartlett: 'Bartlett U.',
+        bartlett: 'Bartlett',
         border: 'Border',
         chalet: 'Chalet',
         club: 'Club House',
