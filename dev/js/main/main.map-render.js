@@ -341,6 +341,37 @@ var R6MMainRender = (function($,window,document,R6MLangTerms,undefined) {
     return html;
   };
 
+  var getOperatorsHtml = function getOperatorsHtml(operators, mapimgUrlPrefix) {
+    var html = '',
+      positionStyle,
+      classes,
+      grouping,
+      title,
+      tagStart,
+      tagEnd;
+
+      operators.forEach(function(operator) { console.log (operator)});
+/*
+    operators.forEach(function(operator) {
+      positionStyle = getPositionStyle(camera);
+      classes = 'camera ';
+      classes += getCommonClasses(camera);
+      grouping = (camera.otherFloor)
+        ? ''
+        : 'data-fancybox-group="camera"';
+      title = R6MLangTerms.terms.general.cameraViewCaption.replace('{floorName}',camera.location.removeBreakTags());
+      tagStart = (camera.id && !camera.otherFloor)
+        ? '<a href="' + IMG_URL + mapimgUrlPrefix + '/' + mapimgUrlPrefix + '-camera-' + camera.id + retinaUrl + '.jpg" title="' + title + '" ' + grouping + ' data-camera-id="' + camera.id + '"'
+        : '<div ';
+      tagEnd = (camera.id && !camera.otherFloor)
+        ? '</a>'
+        : '</div>';
+      html += tagStart + 'style="' + positionStyle + '" class="' + classes + '"><span class="other-floor"></span><span class="cam-num">' + camera.id + '</span>' + tagEnd;
+    });
+    */
+    return html;
+  };
+
   var getPanelLabelsHtml = function getPanelLabelsHtml(floors) {
     var html = '',
       cssClass = '';
@@ -434,7 +465,7 @@ var R6MMainRender = (function($,window,document,R6MLangTerms,undefined) {
     return html;
   };
 
-  var renderMap = function renderMap(mapData, $mapWrappers, $mapElements, $svgMapWrappers, $mapPanelLabels) {
+  var renderMap = function renderMap(mapData, operatorNames, $mapWrappers, $mapElements, $svgMapWrappers, $mapPanelLabels) {
     var html = '';
 
     html += getMaxFloorIndexHtml($mapWrappers, mapData.floors, mapData.imgUrlPrefix);
@@ -450,6 +481,7 @@ var R6MMainRender = (function($,window,document,R6MLangTerms,undefined) {
     html += getCompassHtml(mapData.compassPoints);
     html += getLaddersHtml(mapData.ladders);
     html += getLegendHtml();
+    html += getOperatorsHtml(operatorNames);
 
     $mapElements.html(html);
     $mapPanelLabels.html(getPanelLabelsHtml(mapData.floors));

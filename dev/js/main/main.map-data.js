@@ -5,6 +5,9 @@ var R6MMainData = (function(R6MLangTerms, undefined){
     DRONE_SMALL = 14,
     mapRoomTerms = R6MLangTerms.terms.mapRooms,
     mapNameTerms = R6MLangTerms.terms.mapNames,
+    //jwahl
+    operators = R6MLangTerms.terms.operators,
+
     objectiveTerms = R6MLangTerms.terms.objectives,
     floorTerms = R6MLangTerms.terms.floorNames,
     spawnTerms = R6MLangTerms.terms.spawnPoints,
@@ -3986,7 +3989,12 @@ var R6MMainData = (function(R6MLangTerms, undefined){
     };
   };
 
+  var getOperators = function getOperators (){
+    return operators;
+  }
+
   return  {
-    getMapData: getMapData
+    getMapData: getMapData,
+    getOperators:  getOperators
   };
 })(R6MLangTerms);

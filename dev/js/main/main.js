@@ -233,12 +233,13 @@
 
   var loadMap = function loadMap() {
     var currentlySelectedMap = R6MMainControls.maps.get(),
-      mapData = R6MMainData.getMapData();
+      mapData = R6MMainData.getMapData(),
+      operatorNames = R6MMainData.getOperators();
 
     R6MMainControls.objectives.populate(mapData[currentlySelectedMap].objectives);
     R6MMainControls.floors.populate(mapData[currentlySelectedMap].floors);
     R6MMainControls.toggle.populate();
-    R6MMainRender.renderMap(mapData[currentlySelectedMap], $mapWrappers, $mapElements, $svgMapWrappers, $mapPanelLabels);
+    R6MMainRender.renderMap(mapData[currentlySelectedMap], operatorNames, $mapWrappers, $mapElements, $svgMapWrappers, $mapPanelLabels);
     if (!DEV_MODE) {
       R6MMainControls.pan.reset($mapMains, getResetDimensions);
       R6MMainControls.zoom.reset($mapMains, getResetDimensions);
