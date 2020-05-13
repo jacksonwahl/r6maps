@@ -468,7 +468,7 @@ var R6MMainRender = (function($,window,document,R6MLangTerms,undefined) {
   var renderMap = function renderMap(mapData, operatorNames, $mapWrappers, $mapElements, $svgMapWrappers, $mapPanelLabels) {
     var html = '';
 
-    /*
+    
     html += getMaxFloorIndexHtml($mapWrappers, mapData.floors, mapData.imgUrlPrefix);
     html += getCeilingHatchesHtml(mapData.ceilingHatches);
     html += getSkylightsHtml(mapData.skylights);
@@ -483,7 +483,6 @@ var R6MMainRender = (function($,window,document,R6MLangTerms,undefined) {
     html += getLaddersHtml(mapData.ladders);
     html += getLegendHtml();
 
-    */
     html += getOperatorsHtml(operatorNames);
 
     $mapElements.html(html);
