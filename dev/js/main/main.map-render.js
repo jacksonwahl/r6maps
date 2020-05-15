@@ -341,35 +341,7 @@ var R6MMainRender = (function($,window,document,R6MLangTerms,undefined) {
     return html;
   };
 
-  var getOperatorsHtml = function getOperatorsHtml(operators, mapimgUrlPrefix) {
-    var html = '',
-      positionStyle,
-      classes,
-      grouping,
-      title,
-      tagStart,
-      tagEnd;
-
-      operators.forEach(function(operator) { console.log (operator)});
-/*
-    operators.forEach(function(operator) {
-      positionStyle = getPositionStyle(camera);
-      classes = 'camera ';
-      classes += getCommonClasses(camera);
-      grouping = (camera.otherFloor)
-        ? ''
-        : 'data-fancybox-group="camera"';
-      title = R6MLangTerms.terms.general.cameraViewCaption.replace('{floorName}',camera.location.removeBreakTags());
-      tagStart = (camera.id && !camera.otherFloor)
-        ? '<a href="' + IMG_URL + mapimgUrlPrefix + '/' + mapimgUrlPrefix + '-camera-' + camera.id + retinaUrl + '.jpg" title="' + title + '" ' + grouping + ' data-camera-id="' + camera.id + '"'
-        : '<div ';
-      tagEnd = (camera.id && !camera.otherFloor)
-        ? '</a>'
-        : '</div>';
-      html += tagStart + 'style="' + positionStyle + '" class="' + classes + '"><span class="other-floor"></span><span class="cam-num">' + camera.id + '</span>' + tagEnd;
-    });
-    */
-    return html;
+  var getOperatorsHtml = function getOperatorsHtml(AttOrDef, op_obj) {
   };
 
   var getPanelLabelsHtml = function getPanelLabelsHtml(floors) {
@@ -465,10 +437,9 @@ var R6MMainRender = (function($,window,document,R6MLangTerms,undefined) {
     return html;
   };
 
-  var renderMap = function renderMap(mapData, operatorNames, $mapWrappers, $mapElements, $svgMapWrappers, $mapPanelLabels) {
+  var renderMap = function renderMap(mapData, attackers, defenders, $mapWrappers, $mapElements, $svgMapWrappers, $mapPanelLabels) {
     var html = '';
 
-    
     html += getMaxFloorIndexHtml($mapWrappers, mapData.floors, mapData.imgUrlPrefix);
     html += getCeilingHatchesHtml(mapData.ceilingHatches);
     html += getSkylightsHtml(mapData.skylights);
@@ -482,8 +453,8 @@ var R6MMainRender = (function($,window,document,R6MLangTerms,undefined) {
     html += getCompassHtml(mapData.compassPoints);
     html += getLaddersHtml(mapData.ladders);
     html += getLegendHtml();
-
-    html += getOperatorsHtml(operatorNames);
+    //html += getOperatorsHtml('attackers', attackers);
+    //html += getOperatorsHtml('defenders', defenders);
 
     $mapElements.html(html);
     $mapPanelLabels.html(getPanelLabelsHtml(mapData.floors));
@@ -526,6 +497,63 @@ var R6MMainRender = (function($,window,document,R6MLangTerms,undefined) {
     }
   };
 
+  var setupOperatorPanels = function setupOperatorPanels ($operatorPanelElements, $operatorIconElements, $mapPanelWrappers, operator_data) {
+    var html,
+      attackers = operator_data.attackers,
+      defenders = operator_data.defenders,
+      all = operator_data.all,
+      iter;
+
+    console.log('attacke');
+    console.log(operator_data.attackers);
+    console.log(operator_data.defenders);
+    //attackers
+    iter = 0;
+    html = '<div class="operator-bar-wrapper"><div id="operator-bar-attackers" class="operator-bar" > ';
+    for (var key in attackers){
+      console.log(key);
+      if (attackers.hasOwnProperty(key)){
+        console.log(key + ' -> ' + attackers[key]);
+        try {
+          var offset_horizontal = (iter % 14) * 35;
+          var offset_vertical = (Math.floor(iter / 14)) * 70;
+
+          html += '<div class="operator-icon-div"' + ' style="top: ' + offset_vertical + 'px; left: ' + offset_horizontal + 'px">';
+          html += '<img src="' + IMG_URL + 'operators/' + key + '.jpg"' + ' class= "operator-icon draggable"/>';
+          html += '</div>';
+          iter += 1;
+        } catch (err){
+          console.log('Error! ' + err );
+        }
+      }
+    }
+    html += '</div>';
+
+    //defenders
+    iter = 0;
+    html += '<div id="operator-bar-defenders" class="operator-bar" > ';
+    for (var key in defenders){
+      console.log(key);
+      if (defenders.hasOwnProperty(key)){
+        console.log(key + ' -> ' + defenders[key]);
+        try {
+          var offset_horizontal = (iter % 14) * 35;
+          var offset_vertical = (Math.floor(iter / 14)) * 70;
+
+          html += '<div class="operator-icon-div"' + ' style="top: ' + offset_vertical + 'px; left: ' + offset_horizontal + 'px">';
+          html += '<img src="' + IMG_URL + 'operators/' + key + '.jpg"' + ' class= "operator-icon draggable"/>';
+          html += '</div>';
+          iter += 1;
+        } catch (err){
+          console.log('Error! ' + err );
+        }
+      }
+    }
+    html += '</div></div>';
+
+    $mapPanelWrappers.find('.center-helper').append(html);
+  };
+
   var showFloor = function showFloor(
     selectedFloorIndex,
     $mapPanelWrappers,
@@ -561,6 +589,7 @@ var R6MMainRender = (function($,window,document,R6MLangTerms,undefined) {
     setEnableScreenshots: setEnableScreenshots,
     setRoomLabelStyle: setRoomLabelStyle,
     setupMapPanels: setupMapPanels,
+    setupOperatorPanels: setupOperatorPanels,
     showFloor: showFloor,
     showObjective: showObjective,
     SVG_DIM: SVG_DIM

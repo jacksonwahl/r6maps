@@ -7,7 +7,8 @@ var R6MMainData = (function(R6MLangTerms, undefined){
     mapNameTerms = R6MLangTerms.terms.mapNames,
     //jwahl
     operators = R6MLangTerms.terms.operators,
-
+    attackers = R6MLangTerms.terms.attackers,
+    defenders = R6MLangTerms.terms.defenders,
     objectiveTerms = R6MLangTerms.terms.objectives,
     floorTerms = R6MLangTerms.terms.floorNames,
     spawnTerms = R6MLangTerms.terms.spawnPoints,
@@ -3990,11 +3991,15 @@ var R6MMainData = (function(R6MLangTerms, undefined){
   };
 
   var getOperators = function getOperators (){
-    return operators;
-  }
+    return {
+      all: operators,
+      attackers: attackers,
+      defenders: defenders
+    };
+  };
 
   return  {
     getMapData: getMapData,
-    getOperators:  getOperators
+    getOperators: getOperators
   };
 })(R6MLangTerms);

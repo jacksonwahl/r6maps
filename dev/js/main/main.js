@@ -7,6 +7,8 @@
     $mapPanelWrappers,
     $mapMains,
     $mapElements,
+    $operatorPanelElements,
+    $operatorIconElements,
     $svgMapWrappers,
     $mapPanelLabels,
     $drawingMarkerWrappers,
@@ -26,6 +28,7 @@
   $(function() { // equivanelt to $(document).ready() - but a bit faster
     setPageElements();
     R6MMainRender.setupMapPanels($mapPanelWrappers, 4);
+    R6MMainRender.setupOperatorPanels($operatorPanelElements, $operatorIconElements, $mapPanelWrappers, R6MMainData.getOperators());
     setMapElements();
     R6MHelpers.tryLoadStartingLanguage(R6MLangTerms.tryLoadLanguage);
     R6MHelpers.tryChangeDirection(R6MLangTerms.getLoadedDirection());
@@ -35,7 +38,6 @@
 
     $sessionsDialog = $('#sessions-dialog');
     R6MMainSessions.createJoinDialog.setup($sessionsDialog);
-
     setupEvents();
     $navLogo.on('click', toggleShowSelectMap);
     tryLoadMenuOptions();
@@ -234,12 +236,12 @@
   var loadMap = function loadMap() {
     var currentlySelectedMap = R6MMainControls.maps.get(),
       mapData = R6MMainData.getMapData(),
-      operatorNames = R6MMainData.getOperators();
+      operators = R6MMainData.getOperators();
 
     R6MMainControls.objectives.populate(mapData[currentlySelectedMap].objectives);
     R6MMainControls.floors.populate(mapData[currentlySelectedMap].floors);
     R6MMainControls.toggle.populate();
-    R6MMainRender.renderMap(mapData[currentlySelectedMap], operatorNames, $mapWrappers, $mapElements, $svgMapWrappers, $mapPanelLabels);
+    R6MMainRender.renderMap(mapData[currentlySelectedMap], operators.attackers, operators.defenders, $mapWrappers, $mapElements, $svgMapWrappers, $mapPanelLabels);
     if (!DEV_MODE) {
       R6MMainControls.pan.reset($mapMains, getResetDimensions);
       R6MMainControls.zoom.reset($mapMains, getResetDimensions);
@@ -368,7 +370,9 @@
 
     showSelectedFloor();
   };
-
+  var setOperatorElements = function setOperatorElements () {
+    $operatorElements = $mapMains.find('.operator-icon');
+  };
   var setPageElements = function setPageElements() {
     $mapPanelWrappers = $('#map-panel-wrapper');
     $navLogo = $('#nav-logo');

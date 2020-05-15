@@ -1,0 +1,40 @@
+.operator-bar {
+
+    border-radius: 5px 5px 0 0;
+    bottom: -725px;
+    color: #fff;
+    font-weight: 400;
+    width: 500px;
+    z-index: 1015;
+    height: 100px;
+    position: absolute;
+
+}
+
+#operator-bar-attackers {
+    background-color:orange;
+    right: 50px;
+
+
+}
+
+#operator-bar-defenders {
+    background-color:blue;
+    left: 50px;
+
+}
+
+.attackers-bar-operator-icon-div {}
+
+.defenders-bar-operator-icon-div {}
+
+.operator-icon-div {
+    width: 30px;
+    display: inline-block;
+    position: absolute;
+    
+}
+
+.operator-icon {
+    width: 100%;
+}
